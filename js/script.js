@@ -2,15 +2,10 @@
 
 let number = 33721;
 
-let numbers = number.toString()
-                    .split("")
-                    .map(num => parseInt(num));
+let resultMultiplication = number.toString().split("").reduce((times, current) => times * current);
 
-let resultMultiplication = numbers.reduce((times, current) => times * current);
-
-let exp = resultMultiplication ** 3;
-
-let resultTwoFirstNumber = parseInt((exp + '').charAt(0))+''+parseInt((exp + '').charAt(1));
+let resultTwoFirstNumber = parseInt((resultMultiplication ** 3 + '').charAt(0))+''+parseInt((resultMultiplication ** 3 + '').charAt(1));
 
 console.log(resultMultiplication);
+
 alert(resultTwoFirstNumber);
