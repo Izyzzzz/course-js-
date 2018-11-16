@@ -5,11 +5,11 @@ let week = ["Понедельник", "Вторник", "Среда", "Четв�
 for (let i = 0; i < week.length; i++) {
 
     if ( i == 5 || i == 6) {
-        document.write( week[i].bold() + "<br>" );
+        document.getElementById('out').innerHTML += ( week[i].bold() + "<br>" );
     } else if ( i== 4 ) {
-        document.write( week[i].italics() + "<br>" );
+        document.getElementById('out').innerHTML += ( week[i].italics() + "<br>" );
     } else {
-        document.write( week[i] + "<br>" );
+        document.getElementById('out').innerHTML += ( week[i] + "<br>" );
     }
 };
 
