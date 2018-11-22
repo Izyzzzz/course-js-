@@ -11,7 +11,7 @@ function plusZero(times) {
 }
 
 document.getElementById('time-day').innerHTML = plusZero(Data.getHours()) + ':' + plusZero(Data.getMinutes()) + ':'  + plusZero(Data.getSeconds()) 
-                        + ' ' +  plusZero(Data.getDate()) + '.' + plusZero(Data.getMonth()) + '.' + plusZero(Data.getFullYear()) + '</br>';
+                        + ' ' +  plusZero(Data.getDate()) + '.' + plusZero(Data.getMonth() + 1) + '.' + plusZero(Data.getFullYear()) + '</br>';
 
 
 let textWeek;
