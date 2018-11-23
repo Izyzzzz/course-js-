@@ -51,20 +51,15 @@ button.addEventListener('click', function () {
     countBudgetBtn.disabled = false;
 });
 
-expensesItem[1].addEventListener('input', function(){
-    if (/^[0-9]*?$/.test(expensesItem[1].value)) {
-        expensesItem[1].defaultValue = expensesItem[1].value;
-    } else {
-        expensesItem[1].value = expensesItem[1].defaultValue;
-    }
-});
-expensesItem[3].addEventListener('input', function(){
-    if (/^[0-9]*?$/.test(expensesItem[3].value)) {
-        expensesItem[3].defaultValue = expensesItem[3].value;
-    } else {
-        expensesItem[3].value = expensesItem[3].defaultValue;
-    }
-});
+for (let i = 1; i < 4; i+=2) {
+    expensesItem[i].addEventListener('input', function(){
+        if (/^[0-9]*?$/.test(expensesItem[i].value)) {
+            expensesItem[i].defaultValue = expensesItem[i].value;
+        } else {
+            expensesItem[i].value = expensesItem[i].defaultValue;
+        }
+    });
+};
 
 expensesItemBtn.addEventListener('click', function () {
     let sum = 0;
@@ -87,27 +82,16 @@ expensesItemBtn.addEventListener('click', function () {
     appData.sumDop = sum;
 });
 
-optionalexpensesItem[0].addEventListener('input', function(){
-    if (/^[а-яА-ЯЁё-і]*?$/.test(optionalexpensesItem[0].value)) {
-        optionalexpensesItem[0].defaultValue = optionalexpensesItem[0].value;
-    } else {
-        optionalexpensesItem[0].value = optionalexpensesItem[0].defaultValue;
-    }
-});
-optionalexpensesItem[1].addEventListener('input', function(){
-    if (/^[а-яА-ЯЁё-і]*?$/.test(optionalexpensesItem[1].value)) {
-        optionalexpensesItem[1].defaultValue = optionalexpensesItem[1].value;
-    } else {
-        optionalexpensesItem[1].value = optionalexpensesItem[1].defaultValue;
-    }
-});
-optionalexpensesItem[2].addEventListener('input', function(){
-    if (/^[а-яА-ЯЁё-і]*?$/.test(optionalexpensesItem[2].value)) {
-        optionalexpensesItem[2].defaultValue = optionalexpensesItem[2].value;
-    } else {
-        optionalexpensesItem[2].value = optionalexpensesItem[2].defaultValue;
-    }
-});
+for ( let i = 0; i < 3; i++) {
+    optionalexpensesItem[i].addEventListener('input', function(){
+        if (/^[а-яА-ЯЁё-і]*?$/.test(optionalexpensesItem[i].value)) {
+            optionalexpensesItem[i].defaultValue = optionalexpensesItem[i].value;
+        } else {
+            optionalexpensesItem[i].value = optionalexpensesItem[i].defaultValue;
+        }
+    });
+}
+
 
 optionalexpensesBtn.addEventListener('click', function () {
     optionalexpensesValue.textContent = '';
