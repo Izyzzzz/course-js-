@@ -138,11 +138,38 @@ income.addEventListener('input', function(){
     }
 });
 
+sumValue.disabled = true;
+percentValue.disabled = true;
+
 checkSavings.addEventListener('click', function(){
     if (appData.savings == true) {
         appData.savings = false;
+        sumValue.disabled = true;
+        percentValue.disabled = true;
+        sumValue.value = '';
+        percentValue.value = '';
+        monthsavingsValue.textContent = '';
+        yearsavingsValue.textContent = '';
     } else {
         appData.savings = true;
+        sumValue.disabled = false;
+        percentValue.disabled = false;
+    }
+});
+
+sumValue.addEventListener('input', function(){
+    if (/^[0-9]*?$/.test(sumValue.value)) {
+        sumValue.defaultValue = sumValue.value;
+    } else {
+        sumValue.value = sumValue.defaultValue;
+    }
+});
+
+percentValue.addEventListener('input', function(){
+    if (/^[0-9]*?$/.test(percentValue.value)) {
+        percentValue.defaultValue = percentValue.value;
+    } else {
+        percentValue.value = percentValue.defaultValue;
     }
 });
 
