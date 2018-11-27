@@ -1,0 +1,19 @@
+button {
+    margin: 15px;
+}
+.wrapper {
+    width: 250px;
+    height: 250px;
+    margin: 5%;
+    border: 1px solid black;
+    position: relative;
+}
+.circle {
+    width: 10px;
+    height: 10px;
+    background: red;
+    border-radius: 10px;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
