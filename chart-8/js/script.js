@@ -40,7 +40,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
     // Timer
 
-    let deadline = '2018-11-29';
+    let deadline = '2018-11-28';
 
     function getTimeRemaining(endtime) {
         let t = Date.parse(endtime) - Date.parse(new Date()),
@@ -61,14 +61,14 @@ window.addEventListener('DOMContentLoaded', function () {
         return times;
     }
 
+ 
     function setClock(id, endtime) {
         let timer = document.getElementById(id),
             hours = timer.querySelector('.hours'),
             minutes = timer.querySelector('.minutes'),
-            seconds = timer.querySelector('.seconds'),
-            timeInterval = setInterval(updateClock, 1000);
+            seconds = timer.querySelector('.seconds');
 
-        function updateClock() {
+        let timeInterval = setTimeout(function updateClock() {
             let t = getTimeRemaining(endtime);
             hours.textContent = plusZero(t.hours);
             minutes.textContent = plusZero(t.minutes);
@@ -80,7 +80,8 @@ window.addEventListener('DOMContentLoaded', function () {
                 minutes.textContent = '00';
                 seconds.textContent = '00';
             }
-        }
+            setTimeout(updateClock, 1000);
+        });
 
         function stop() {
             clearTimeout(timeInterval);
@@ -93,10 +94,10 @@ window.addEventListener('DOMContentLoaded', function () {
     //Плавный скрол по сайту при клике по меню
 
     let linkMenu = document.querySelectorAll('[href^="#"]'), 
-        speed = 1; 
+        speed = 0.7; 
     for (let i = 0; i < linkMenu.length; i++) {
         linkMenu[i].addEventListener('click', function (event) { 
-            event.preventDefault(); 
+            event.preventDefault();
             let widthTop = document.documentElement.scrollTop, 
                 hash = this.href.replace(/[^#]*(.*)/, '$1'),
                 toBlock = document.querySelector(hash).getBoundingClientRect().top, 
