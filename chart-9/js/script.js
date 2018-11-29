@@ -104,7 +104,7 @@ window.addEventListener('DOMContentLoaded', function () {
         document.body.style.overflow = 'hidden';
         if (/Edge|MSIE|Trident/.test(navigator.userAgent)) {
             this.classList.add('more-splash');
-        } else if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+        } else if( window.screen.width < 920 ){
             overlay.classList.remove('fade');
         } else{
             let animation = overlay.animate([{
