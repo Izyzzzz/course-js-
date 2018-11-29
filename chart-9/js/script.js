@@ -104,7 +104,7 @@ window.addEventListener('DOMContentLoaded', function () {
         document.body.style.overflow = 'hidden';
         if (/Edge|MSIE|Trident/.test(navigator.userAgent)) {
             this.classList.add('more-splash');
-        } else if( window.screen.width < 920 ){
+        } else if( window.screen.width < 992 ){
             overlay.classList.remove('fade');
         } else{
             let animation = overlay.animate([{
