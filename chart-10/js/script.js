@@ -1,7 +1,3 @@
-
-
-
-
 window.addEventListener("DOMContentLoaded", function() {
 
     'use strict';
@@ -11,9 +7,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
     input.value = maska;
 
-    input.addEventListener("input", mask);
-
-    
+    input.addEventListener("input", mask);    
      
     function mask() {
         let i = 0,
@@ -24,6 +18,8 @@ window.addEventListener("DOMContentLoaded", function() {
 
         this.value = maska.replace(/./g, function(a) {
             return /[_\d]/.test(a) && i < inputValue.length ? inputValue.charAt(i++) : i >= inputValue.length ? "" : a            
-        });             
+        });
+
     };
+    
 });
