@@ -133,7 +133,12 @@ window.addEventListener('DOMContentLoaded', function () {
     let form = document.querySelector('.main-form'),
         formCont = document.querySelector('#form'),        
         statusMessage = document.createElement('div');
-        statusMessage.classList.add('status');
+    statusMessage.classList.add('status');
+    let popapClose = document.querySelector('.popup-close');
+
+    popapClose.addEventListener ('click', function() {
+        form.removeChild(statusMessage);
+    });
     
     [form, formCont].forEach(function (item) {
         item.addEventListener('submit', function(event) {
@@ -161,6 +166,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
             for (let i = 0; i < input.length; i++) {
                 input[i].value = '';
+                
             }
         });
     });
