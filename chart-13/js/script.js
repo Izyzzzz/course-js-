@@ -92,6 +92,34 @@ window.addEventListener('DOMContentLoaded', function () {
 
     setClock('timer', deadline);
 
+    //Плавный скрол по сайту при клике по меню
+
+    let linkMenu = document.querySelectorAll('[href^="#"]'),
+        speed = 0.7;
+    for (let i = 0; i < linkMenu.length; i++) {
+        linkMenu[i].addEventListener('click', function (event) {
+            event.preventDefault();
+            let widthTop = document.documentElement.scrollTop,
+                hash = this.href.replace(/[^#]*(.*)/, '$1'),
+                toBlock = document.querySelector(hash).getBoundingClientRect().top,
+                start = null;
+            requestAnimationFrame(step);
+
+            function step(time) {
+                if (start === null) start = time;
+                let progress = time - start,
+                    r = (toBlock < 0 ? Math.max(widthTop - progress / speed, widthTop + toBlock) : Math.min(widthTop + progress / speed, widthTop + toBlock));
+                document.documentElement.scrollTo(0, r);
+                if (r != widthTop + toBlock) {
+                    requestAnimationFrame(step)
+                } else {
+                    location.hash = hash
+                }
+            }
+
+        }, false);
+    }
+
     //Modal
 
     let more = document.querySelector('.more'),
@@ -132,58 +160,88 @@ window.addEventListener('DOMContentLoaded', function () {
 
     let form = document.querySelector('.main-form'),
         formCont = document.querySelector('#form'),
-        statusMessage = document.createElement('div');
+        statusMessage = document.createElement('div'),
+        popapClose = document.querySelector('.popup-close');
+
     statusMessage.classList.add('status');
-    let popapClose = document.querySelector('.popup-close');
 
-    popapClose.addEventListener('click', function () {
-        form.removeChild(statusMessage);
-    });
 
-    [form, formCont].forEach(function (item) {
-        item.addEventListener('submit', function (event) {
-            event.preventDefault();
-            item.appendChild(statusMessage);
-
-            let input = item.getElementsByTagName('input');
-
-            let formData = new FormData(item);
-
-            function postData(data) {
-                return new Promise(function (resolve, reject) {
-                    let request = new XMLHttpRequest();
-
-                    request.open('POST', 'server.php');
-
-                    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-                    request.addEventListener('readystatechange', function () {
-                        if (request.readyState < 4) {
-                            resolve()
-                        } else if (request.readyState === 4 && request.status == 200) {
-                            resolve()
-                        } else {
-                            reject()
-                        }
-                    });
-                    request.send(data);
-                });
-            }
-
-            function clearInput() {
-                for (let i = 0; i < input.length; i++) {
-                    input[i].value = '';
+    function sendForm(elem) {
+        elem.addEventListener('submit', function (e) {
+            e.preventDefault();
+            let formInput = elem.getElementsByTagName('input');
+            let flag = false;
+            for (let i = 0; i < formInput.length; i++) {
+                if (formInput[i].value.length > 16) {
+                    flag = true;
+                } else {
+                    flag = false;
+                    break;
                 }
             }
 
-            postData(formData)
-                .then(() => statusMessage.innerHTML = message.loading)
-                .then(() => statusMessage.innerHTML = message.success)
-                .catch(() => statusMessage.innerHTML = message.failure)
-                .then(clearInput)
+            if (flag) {
+                elem.appendChild(statusMessage);
+
+                let input = elem.getElementsByTagName('input');
+
+                let formData = new FormData(elem);
+
+                function postData(data) {
+                    return new Promise(function (resolve, reject) {
+                        let request = new XMLHttpRequest();
+
+                        request.open('POST', 'server.php');
+
+                        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                        request.addEventListener('readystatechange', function () {
+                            if (request.readyState < 4) {
+                                resolve()
+                            } else if (request.readyState === 4 && request.status == 200) {
+                                resolve()
+                            } else {
+                                reject()
+                            }
+                        });
+                        request.send(data);
+                    });
+                }
+
+                function clearInput() {
+                    for (let i = 0; i < input.length; i++) {
+                        input[i].value = '';
+                    }
+                }
+
+                postData(formData)
+                    .then(() => statusMessage.innerHTML = message.loading)
+                    .then(() => statusMessage.innerHTML = message.success)
+                    .catch(() => statusMessage.innerHTML = message.failure)
+                    .then(clearInput)
+            } else {
+                alert('Слишком мало символов.');
+            }
 
         });
+    }
+
+    sendForm(form);
+    sendForm(formCont);
+
+
+
+    popapClose.addEventListener('click', function () {
+
+        statusMessage.innerHTML = '';
+
+        for (let i = 0; i < input.length; i++) {
+            input[i].value = '';
+        }
+
     });
+
+
 
     //Maska
 
