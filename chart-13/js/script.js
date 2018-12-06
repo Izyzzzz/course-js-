@@ -350,7 +350,7 @@ window.addEventListener('DOMContentLoaded', function () {
         if (restDays.value == '' || personsSum == 0) {
             totalValue.innerHTML = 0;
         } else {
-            animateValue("total", 0, total, 5000);
+            animateValue("total", 0, total, 500);
         }
     });
 
@@ -361,7 +361,7 @@ window.addEventListener('DOMContentLoaded', function () {
         if (persons.value == '' || daysSum == 0) {
             totalValue.innerHTML = 0;
         } else {
-            animateValue("total", 0, total, 5000);
+            animateValue("total", 0, total, 500);
         }
     });
 
@@ -373,23 +373,24 @@ window.addEventListener('DOMContentLoaded', function () {
             let a = total;
 
             totalA = a * ratio;
-            animateValue("total", 0, totalA, 5000);
+            animateValue("total", 0, totalA, 500);
         }
     });
 
     function animateValue(id, start, end, duration) {
-        var range = end - start;
-        var current = start;
-        var increment = end > start ? 1 : -1;
-        var stepTime = Math.abs(Math.floor(duration / range));
-        var obj = document.getElementById(id);
-        var timer = setInterval(function () {
+        let range = end - start;
+        let current = start;
+        let increment = end > start ? 1000 : -1;
+        let stepTime = Math.abs(Math.floor(duration / range));
+        let obj = document.getElementById(id);
+        let timer = setInterval(function () {
             current += increment;
             obj.innerHTML = current;
             if (current == end) {
                 clearInterval(timer);
             }
         }, stepTime);
+        console.log(stepTime);
     }
 
 });
