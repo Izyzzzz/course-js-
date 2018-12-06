@@ -231,6 +231,13 @@ window.addEventListener('DOMContentLoaded', function () {
         dots.forEach((item) => item.classList.remove('dot-active'));
         slides[slideIndex - 1].style.display = 'block';
         dots[slideIndex - 1].classList.add('dot-active');
+        slides[slideIndex - 1].animate([{
+                transform: 'translateX(500px)'
+            },
+            {
+                transform: 'translateX(0px)'
+            }
+        ], 500);
     }
 
     function plusSlides(n) {
@@ -285,7 +292,6 @@ window.addEventListener('DOMContentLoaded', function () {
         if (restDays.value == '' || personsSum == 0) {
             totalValue.innerHTML = 0;
         } else {
-            // totalValue.innerHTML = total;
             animateValue("total", 0, total, 5000);
         }
     });
@@ -297,7 +303,6 @@ window.addEventListener('DOMContentLoaded', function () {
         if (persons.value == '' || daysSum == 0) {
             totalValue.innerHTML = 0;
         } else {
-            // totalValue.innerHTML = total;
             animateValue("total", 0, total, 5000);
         }
     });
@@ -317,10 +322,10 @@ window.addEventListener('DOMContentLoaded', function () {
     function animateValue(id, start, end, duration) {
         var range = end - start;
         var current = start;
-        var increment = end > start? 1 : -1;
+        var increment = end > start ? 1 : -1;
         var stepTime = Math.abs(Math.floor(duration / range));
         var obj = document.getElementById(id);
-        var timer = setInterval(function() {
+        var timer = setInterval(function () {
             current += increment;
             obj.innerHTML = current;
             if (current == end) {
@@ -328,5 +333,5 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         }, stepTime);
     }
-    
+
 });
