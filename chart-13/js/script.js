@@ -55,7 +55,7 @@ window.addEventListener('DOMContentLoaded', function () {
             'hours': hours,
             'minutes': minutes,
             'seconds': seconds
-        }
+        };
     }
 
     function plusZero(times) {
@@ -172,7 +172,8 @@ window.addEventListener('DOMContentLoaded', function () {
             let formInput = elem.getElementsByTagName('input');
             let flag = false;
             for (let i = 0; i < formInput.length; i++) {
-                if (formInput[i].value.length > 16) {
+                console.log(formInput[i].value.replace(/\D/g, "").length);
+                if (formInput[i].value.replace(/\D/g, "").length > 10) {
                     flag = true;
                 } else {
                     flag = false;
@@ -257,6 +258,7 @@ window.addEventListener('DOMContentLoaded', function () {
         let i = 0,
             constant = maska.replace(/\D/g, ""),
             inputValue = this.value.replace(/\D/g, "");
+        // console.log(inputValue.length);
 
         if (constant.length >= inputValue.length) inputValue = constant;
 
@@ -372,25 +374,21 @@ window.addEventListener('DOMContentLoaded', function () {
         } else {
             let a = total;
 
-            totalA = a * ratio;
+            let totalA = a * ratio;
             animateValue("total", 0, totalA, 500);
         }
     });
 
     function animateValue(id, start, end, duration) {
-        let range = end - start;
         let current = start;
-        let increment = end > start ? 1000 : -1;
-        let stepTime = Math.abs(Math.floor(duration / range));
-        let obj = document.getElementById(id);
+        let increment = 50;
         let timer = setInterval(function () {
             current += increment;
-            obj.innerHTML = current;
-            if (current == end) {
+            document.getElementById(id).innerHTML = current;
+            if (current == end || current > end) {
                 clearInterval(timer);
             }
-        }, stepTime);
-        console.log(stepTime);
+        }, 3);
     }
 
 });
