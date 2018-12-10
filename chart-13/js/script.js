@@ -365,7 +365,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
     place.addEventListener('change', function () {
         ratio = this.options[this.selectedIndex].value;
-        if (restDays.value == '' || persons.value == '') {
+        if (restDays.value == '' || persons.value == '' || persons.value == 0 || restDays.value == 0) {
             totalValue.innerHTML = 0;
         } else {
             let a = total;
