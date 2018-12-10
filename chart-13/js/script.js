@@ -166,19 +166,16 @@ window.addEventListener('DOMContentLoaded', function () {
     statusMessage.classList.add('status');
 
 
-    function sendForm(elem) {
+    function sendForm(elem, numElem) {
         elem.addEventListener('submit', function (e) {
             e.preventDefault();
-            let formInput = elem.getElementsByTagName('input');
+            let formInputTwo = elem.getElementsByTagName('input');
             let flag = false;
-            for (let i = 0; i < formInput.length; i++) {
-                console.log(formInput[i].value.replace(/\D/g, "").length);
-                if (formInput[i].value.replace(/\D/g, "").length > 10) {
-                    flag = true;
-                } else {
-                    flag = false;
-                    break;
-                }
+            
+            if (formInputTwo[numElem].value.replace(/\D/g, "").length > 10 ) {
+                flag = true;
+            }  else {
+                flag = false;
             }
 
             if (flag) {
@@ -227,8 +224,8 @@ window.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    sendForm(form);
-    sendForm(formCont);
+    sendForm(form, 0);
+    sendForm(formCont, 1);
 
 
 
@@ -258,7 +255,6 @@ window.addEventListener('DOMContentLoaded', function () {
         let i = 0,
             constant = maska.replace(/\D/g, ""),
             inputValue = this.value.replace(/\D/g, "");
-        // console.log(inputValue.length);
 
         if (constant.length >= inputValue.length) inputValue = constant;
 
