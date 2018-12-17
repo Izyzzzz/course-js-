@@ -103,14 +103,18 @@ window.addEventListener('DOMContentLoaded', function () {
                 hash = this.href.replace(/[^#]*(.*)/, '$1'),
                 toBlock = document.querySelector(hash).getBoundingClientRect().top,
                 start = null;
-            requestAnimationFrame(step);
+
+            requestAnimationFrame(step);                       
 
             function step(time) {
                 if (start === null) start = time;
                 let progress = time - start,
                     r = (toBlock < 0 ? Math.max(widthTop - progress / speed, widthTop + toBlock) : Math.min(widthTop + progress / speed, widthTop + toBlock));
-                document.documentElement.scrollTo(0, r);
-                if (r != widthTop + toBlock) {
+                    
+                let rill = r - 70;
+
+                document.documentElement.scrollTo(0, rill);
+                if (rill != widthTop + toBlock) {
                     requestAnimationFrame(step)
                 } else {
                     location.hash = hash
@@ -287,13 +291,6 @@ window.addEventListener('DOMContentLoaded', function () {
         dots.forEach((item) => item.classList.remove('dot-active'));
         slides[slideIndex - 1].style.display = 'block';
         dots[slideIndex - 1].classList.add('dot-active');
-        slides[slideIndex - 1].animate([{
-                transform: 'translateX(500px)'
-            },
-            {
-                transform: 'translateX(0px)'
-            }
-        ], 500);
     }
 
     function plusSlides(n) {
@@ -306,10 +303,24 @@ window.addEventListener('DOMContentLoaded', function () {
 
     prev.addEventListener('click', function () {
         plusSlides(-1);
+        slides[slideIndex - 1].animate([{
+            transform: 'translateX(-500px)'
+        },
+        {
+            transform: 'translateX(0px)'
+        }
+    ], 500);
     });
 
     next.addEventListener('click', function () {
         plusSlides(1);
+        slides[slideIndex - 1].animate([{
+            transform: 'translateX(500px)'
+        },
+        {
+            transform: 'translateX(0px)'
+        }
+    ], 500);
     });
 
     dotsWrap.addEventListener('click', function (event) {
@@ -327,10 +338,7 @@ window.addEventListener('DOMContentLoaded', function () {
         restDays = document.querySelectorAll('.counter-block-input')[1],
         place = document.getElementById('select'),
         totalValue = document.getElementById('total'),
-        personsSum = 0,
-        daysSum = 0,
-        total = 0,
-        ratio = 1;
+        total = 0;
 
     totalValue.innerHTML = 0;
 
@@ -341,39 +349,19 @@ window.addEventListener('DOMContentLoaded', function () {
         (/^[0-9]*?$/.test(this.value)) ? this.defaultValue = this.value: this.value = this.defaultValue;
     });
 
-    persons.addEventListener('change', function () {
-        personsSum = +this.value;
-        total = (daysSum + personsSum) * 4000 * ratio;
 
-        if (restDays.value == '' || restDays.value == 0 || personsSum == 0) {
+    function estimation() {
+        if (restDays.value == '' || restDays.value == 0 || persons.value == '' || persons.value == 0) {
             totalValue.innerHTML = 0;
-        } else {
+        } else {            
+            total = (+persons.value + +restDays.value) * place.value * 4000 ;
+            console.log(persons.value, restDays.value, place.value, total);
             animateValue("total", 0, total);
         }
-    });
-
-    restDays.addEventListener('change', function () {
-        daysSum = +this.value;
-        total = (daysSum + personsSum) * 4000 * ratio;
-
-        if (persons.value == '' || persons.value == 0 || daysSum == 0) {
-            totalValue.innerHTML = 0;
-        } else {
-            animateValue("total", 0, total);
-        }
-    });
-
-    place.addEventListener('change', function () {
-        ratio = this.options[this.selectedIndex].value;
-        if (restDays.value == '' || persons.value == '' || persons.value == 0 || restDays.value == 0) {
-            totalValue.innerHTML = 0;
-        } else {
-            let a = total;
-
-            let totalA = a * ratio;
-            animateValue("total", 0, totalA);
-        }
-    });
+    }
+    persons.addEventListener('change', estimation);
+    restDays.addEventListener('change', estimation);
+    place.addEventListener('change', estimation);  
 
     function animateValue(id, start, end) {
         let current = start;
